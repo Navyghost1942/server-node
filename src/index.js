@@ -23,6 +23,6 @@ app.use(router)
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(port, () =>
-    logger.info('Application started at https://localhost:${process.env.PORT}'),
-)
+app.listen(port, callback: () => {
+    logger.info(message: 'Server running on port ${port}')
+})
