@@ -1,6 +1,11 @@
 import { Router } from 'express'
 
-import {getPersons, getPerson, createPerson, updatePerson, deletePerson,} from '../../models/persons'
+import {getPersons, 
+    getPerson, 
+    createPerson, 
+    updatePerson, 
+    deletePerson,
+    } from '../../models/persons'
 
 const router = Router()
 
@@ -10,20 +15,35 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    const person = getPerson ( id: req.params.id)
-    res.send(person)
+    const person = getPerson ( req.params.id)
+    if(person) {
+        res.send(person) 
+    }
+    res.status(404).send({msg: 'Person not Found'})
 })
 
 router.post('/', (req, res) => {
-    res.send({msg: 'Creating a new Person'})
+    const newPerson = createPerson( person: req.body)
+    if (newPerson) {
+    res.status(201).send(newPerson)
+    }
+    res.status(400).send({msg: 'Bad request'})
 })
 
 router.put('/:id', (req, res) => {
-    res.send({msg: 'Updating Person ${req.params.id}' })
+    const updatedPerson = updatePerson (req.params.id, req.body)
+    if (updatedPerson) {
+    res.send(updatedPerson)
+    }
+    res.status(404).send({msg: 'Person not found'})
 })
 
 router.delete('/:id', (req, res) => {
-    res.send({msg: 'Deleting Person ${req.params.id}' })
+    const deleted = deletedPerson(req.params.id)
+    if(deleted) {
+    res.send({msg: 'Person ${req.params.id} Deleted' })
+    }
+    res.status(404).send({msg: 'Person not found'})
 })
 
 
