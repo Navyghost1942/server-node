@@ -1,11 +1,11 @@
-import './helpers/dontenv'
+import './helpers/dotenv'
 
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
-import basicAuth from 'exoress-basic-auth'
+import basicAuth from 'express-basic-auth'
 
 
 import logger from './helpers/logger'
@@ -18,11 +18,11 @@ const app = express()
 
 app.use(
     basicAuth({
-        users: { [process.env.ADMIN_USER]: admin: process.env.ADMIN_PASSWORD},
+        users: { [process.env.ADMIN_USER]: process.env.ADMIN_PASSWORD },
     }),
 )
 app.use(morgan(process.env.MORGAN_LOG))
-app.use(cors({origin: process.env.ORIGIN}))
+app.use(cors({ origin: process.env.ORIGIN }))
 app.use(helmet())
 app.use(bodyParser.json())
 
@@ -31,6 +31,6 @@ app.use(router)
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(port, callback: () => {
-    logger.info(message: 'Server running on port ${port}')
+app.listen(port, () => {
+    logger.info('Server running on port ${port}')
 })
